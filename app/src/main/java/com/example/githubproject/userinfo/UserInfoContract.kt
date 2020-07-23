@@ -1,6 +1,6 @@
-package com.example.githubproject.search
+package com.example.githubproject.userinfo
 
-interface SearchInputContract {
+interface UserInfoContract {
     interface View {
 
     }

@@ -1,15 +1,19 @@
-package com.example.githubproject.search
+package com.example.githubproject.userinfo
 
 import com.example.githubproject.network.ApiService
-import com.example.githubproject.search.model.UserResponse
+import com.example.githubproject.userinfo.model.UserResponse
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import timber.log.Timber
 import javax.inject.Inject
 
-class SearchPresenter @Inject constructor(private val service: ApiService) :
-    SearchInputContract.Presenter {
+class UserInfoPresenter @Inject constructor(private val service: ApiService) :
+    UserInfoContract.Presenter {
+
+    init {
+        Timber.e("KEVIN!")
+    }
 
     private val compositeDisposable = CompositeDisposable()
 
@@ -18,7 +22,7 @@ class SearchPresenter @Inject constructor(private val service: ApiService) :
             service.getUser(userId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(this::onSuccess)
+                .subscribe(this::onSuccess, this::onError)
         )
     }
 
@@ -28,5 +32,10 @@ class SearchPresenter @Inject constructor(private val service: ApiService) :
 
     private fun onSuccess(response: UserResponse) {
         Timber.d(response.toString())
+    }
+
+    private fun onError(throwable: Throwable) {
+        Timber.e(throwable)
+        throwable.printStackTrace()
     }
 }

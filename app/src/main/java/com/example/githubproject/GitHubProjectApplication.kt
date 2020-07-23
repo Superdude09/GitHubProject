@@ -12,6 +12,7 @@ class GitHubProjectApplication : Application() {
     companion object {
         fun get(activity: Activity) : GitHubProjectApplication = activity.application as GitHubProjectApplication
     }
+
     override fun onCreate() {
         super.onCreate()
         initInjection()
