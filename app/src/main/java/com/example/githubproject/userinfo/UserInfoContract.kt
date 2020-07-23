@@ -1,8 +1,11 @@
 package com.example.githubproject.userinfo
 
-interface UserInfoContract {
-    interface View {
+import com.example.githubproject.common.BaseView
+import com.example.githubproject.userinfo.model.UserInfo
 
+interface UserInfoContract {
+    interface View : BaseView {
+        fun displayUserInfo(userInfo: UserInfo)
     }
 
     interface Presenter {

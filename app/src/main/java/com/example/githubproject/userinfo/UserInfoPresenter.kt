@@ -1,7 +1,9 @@
 package com.example.githubproject.userinfo
 
+import com.example.githubproject.common.BasePresenter
 import com.example.githubproject.network.ApiService
-import com.example.githubproject.userinfo.model.UserResponse
+import com.example.githubproject.network.response.UserResponse
+import com.example.githubproject.userinfo.model.UserInfo
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -9,7 +11,9 @@ import timber.log.Timber
 import javax.inject.Inject
 
 class UserInfoPresenter @Inject constructor(private val service: ApiService) :
-    UserInfoContract.Presenter {
+    UserInfoContract.Presenter, BasePresenter<UserInfoFragment>() {
+
+    private var userInfo: UserInfo? = null
 
     init {
         Timber.e("KEVIN!")
@@ -32,10 +36,17 @@ class UserInfoPresenter @Inject constructor(private val service: ApiService) :
 
     private fun onSuccess(response: UserResponse) {
         Timber.d(response.toString())
+
+        userInfo = UserInfo(response.name, response.avatarUrl)
+
+        userInfo?.let {
+            view?.displayUserInfo(it)
+        }
     }
 
     private fun onError(throwable: Throwable) {
         Timber.e(throwable)
         throwable.printStackTrace()
     }
+
 }

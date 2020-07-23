@@ -7,10 +7,12 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.githubproject.GitHubProjectApplication
 import com.example.githubproject.R
+import com.example.githubproject.userinfo.model.UserInfo
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.layout_user_info.*
 import javax.inject.Inject
 
-class UserInfoFragment : Fragment()  {
+class UserInfoFragment : Fragment(), UserInfoContract.View  {
 
     @Inject
     lateinit var presenter: UserInfoPresenter
@@ -29,9 +31,24 @@ class UserInfoFragment : Fragment()  {
         return inflater.inflate(R.layout.layout_user_info, container, false)
     }
 
-    fun setUserid(userId: String) {
-        tv_user_id.text = userId
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
+        presenter.bindView(this)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+
+        presenter.unbindView()
+    }
+
+    override fun displayUserInfo(userInfo: UserInfo) {
+        tv_user_id.text = userInfo.userId
+        Picasso.get().load(userInfo.avatarUrl).into(user_avatar)
+    }
+
+    fun doSearch(userId: String) {
         presenter.getUser(userId)
     }
 }

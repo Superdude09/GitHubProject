@@ -2,7 +2,6 @@ package com.example.githubproject
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.githubproject.search.SearchInputFragment
 import com.example.githubproject.userinfo.UserInfoFragment
@@ -28,7 +27,7 @@ class MainActivity : AppCompatActivity(), SearchInputFragment.OnSearchSubmittedL
         val userInfoFragment = supportFragmentManager.findFragmentById(R.id.user_info_fragment) as UserInfoFragment
 
         userInfoFragment?.let {
-            userInfoFragment.setUserid(searchValue)
+            userInfoFragment.doSearch(searchValue)
         }
     }
 }
