@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import com.example.githubproject.GitHubProjectApplication
 import com.example.githubproject.R
 import com.example.githubproject.userinfo.model.UserInfo
+import com.example.githubproject.userinfo.model.UserRepo
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.layout_user_info.*
 import javax.inject.Inject
@@ -46,6 +47,10 @@ class UserInfoFragment : Fragment(), UserInfoContract.View  {
     override fun displayUserInfo(userInfo: UserInfo) {
         tv_user_id.text = userInfo.userId
         Picasso.get().load(userInfo.avatarUrl).into(user_avatar)
+    }
+
+    override fun displayUserRepos(userRepos: List<UserRepo>) {
+//        TODO("Not yet implemented")
     }
 
     fun doSearch(userId: String) {
