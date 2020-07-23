@@ -6,9 +6,9 @@ import com.example.githubproject.network.response.UserReposResponse
 import com.example.githubproject.network.response.UserResponse
 import com.example.githubproject.userinfo.model.UserInfo
 import com.example.githubproject.userinfo.model.UserRepo
-import io.reactivex.schedulers.Schedulers
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -16,12 +16,6 @@ class UserInfoPresenter @Inject constructor(private val service: ApiService) :
     UserInfoContract.Presenter, BasePresenter<UserInfoFragment>() {
 
     private var userId: String? = null
-    private var userInfo: UserInfo? = null
-    private var userRepos: List<UserRepo>? = mutableListOf()
-
-    init {
-        Timber.e("KEVIN!")
-    }
 
     private val compositeDisposable = CompositeDisposable()
 
@@ -32,6 +26,7 @@ class UserInfoPresenter @Inject constructor(private val service: ApiService) :
             service.getUser(userId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
+                .map(this::processUserInfoResponse)
                 .subscribe(this::onGetUserInfoSuccess, this::onGetUserInfoError)
         )
     }
@@ -41,6 +36,7 @@ class UserInfoPresenter @Inject constructor(private val service: ApiService) :
             service.getUserPublicRepos(userId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
+                .map(this::processUserReposResponse)
                 .subscribe(this::onGetUserReposSuccess, this::onGetUserReposError)
         )
     }
@@ -49,14 +45,14 @@ class UserInfoPresenter @Inject constructor(private val service: ApiService) :
         compositeDisposable.clear()
     }
 
-    private fun onGetUserInfoSuccess(response: UserResponse) {
-        Timber.d(response.toString())
+    private fun processUserInfoResponse(userInfoDTO: UserResponse): UserInfo {
+        return UserInfo(userInfoDTO.name, userInfoDTO.avatarUrl)
+    }
 
-        userInfo = UserInfo(response.name, response.avatarUrl)
+    private fun onGetUserInfoSuccess(userInfo: UserInfo) {
+        Timber.d("Successfully retrieved user info: ${userInfo.toString()}")
 
-        userInfo?.let {
-            view?.displayUserInfo(it)
-        }
+        view?.displayUserInfo(userInfo)
 
         userId?.let {
             getUserRepos(it)
@@ -67,18 +63,31 @@ class UserInfoPresenter @Inject constructor(private val service: ApiService) :
         Timber.e(throwable)
     }
 
-    private fun onGetUserReposSuccess(response: List<UserReposResponse>) {
-        Timber.d(response.toString())
+    private fun processUserReposResponse(userReposDTOs: List<UserReposResponse>): List<UserRepo> {
+        val listUserRepos = mutableListOf<UserRepo>()
 
-//        userRepos = User
+        for (userRepoDTO in userReposDTOs) {
+            listUserRepos.add(
+                UserRepo(
+                    userRepoDTO.name,
+                    userRepoDTO.description,
+                    userRepoDTO.updatedAt,
+                    userRepoDTO.stargazersCount,
+                    userRepoDTO.forks
+                )
+            )
+        }
 
-//        userInfo?.let {
-//            view?.displayUserInfo(it)
-//        }
+        return listUserRepos
+    }
+
+    private fun onGetUserReposSuccess(userRepos: List<UserRepo>) {
+        Timber.d("Successfully retrieved user repos: ${userRepos.toString()}")
+
+        view?.displayUserRepos(userRepos)
     }
 
     private fun onGetUserReposError(throwable: Throwable) {
         Timber.e(throwable)
-        throwable.printStackTrace()
     }
 }
