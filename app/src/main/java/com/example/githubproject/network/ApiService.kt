@@ -1,10 +1,11 @@
 package com.example.githubproject.network
 
-import com.example.githubproject.model.UserResponse
+import com.example.githubproject.search.model.UserResponse
 import io.reactivex.Single
 import retrofit2.http.GET
+import retrofit2.http.Path
 
 interface ApiService {
     @GET("/users/{userId}")
-    fun getUser(): Single<UserResponse>
+    fun getUser(@Path("userId") userId: String): Single<UserResponse>
 }

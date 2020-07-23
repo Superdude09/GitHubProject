@@ -6,9 +6,12 @@ import com.example.githubproject.network.ApiService
 import dagger.Component
 
 //@ApplicationScope
-@Component(modules = [RetrofitModule::class])
+@Component(
+    modules = [RetrofitModule::class,
+        SearchActivityModule::class]
+)
 interface AppComponent {
-    fun getApiService() : ApiService
+    fun getApiService(): ApiService
 
     fun injectApplication(application: GitHubProjectApplication)
 }

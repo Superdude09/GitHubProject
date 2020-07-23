@@ -14,7 +14,7 @@ class RetrofitModule {
 
     @Provides
 //    @ApplicationScope
-    fun getRetrofit() = Retrofit.Builder()
+    fun getRetrofit(): Retrofit = Retrofit.Builder()
         .baseUrl("https://api.github.com/")
         .addConverterFactory(GsonConverterFactory.create())
         .client(getOkHttpClient())
@@ -22,7 +22,7 @@ class RetrofitModule {
         .build()
 
     @Provides
-    fun getOkHttpClient() = OkHttpClient.Builder().build()
+    fun getOkHttpClient(): OkHttpClient = OkHttpClient.Builder().build()
 
     @Provides
     fun provideApiService(retrofit: Retrofit) = retrofit.create(ApiService::class.java)
