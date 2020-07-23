@@ -20,8 +20,8 @@
 
         <ImageView
             android:id="@+id/user_avatar"
-            android:layout_width="72dp"
-            android:layout_height="72dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:layout_gravity="center_horizontal"/>
 
         <TextView
