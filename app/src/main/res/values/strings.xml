@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">GitHubProject</string>
+    <string name="app_name">Take Home</string>
+    <string name="search_button_label">Search</string>
+    <string name="search_input_layout_hint">Enter a github user id</string>
 </resources>
