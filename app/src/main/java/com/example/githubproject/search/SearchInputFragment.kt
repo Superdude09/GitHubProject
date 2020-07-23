@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.githubproject.R
 import kotlinx.android.synthetic.main.layout_search_input.*
+import javax.inject.Inject
 
 class SearchInputFragment : Fragment() {
     internal var callback: OnSearchSubmittedListener? = null
@@ -15,10 +16,7 @@ class SearchInputFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.layout_search_input, container, false)
-    }
+    ): View = inflater.inflate(R.layout.layout_search_input, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -30,15 +28,13 @@ class SearchInputFragment : Fragment() {
         searchButton.setOnClickListener {
             val searchInput = search_input_edit_text.text
             callback?.onSearchSubmitted(searchInput.toString())
+
+            // TODO: Hide keyboard
         }
     }
 
     fun setOnHeadlineSelectedListener(callback: OnSearchSubmittedListener) {
         this.callback = callback
-    }
-
-    fun onSearchClick(view:View) {
-
     }
 
     interface OnSearchSubmittedListener {

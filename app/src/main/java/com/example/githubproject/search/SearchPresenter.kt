@@ -9,7 +9,8 @@ import timber.log.Timber
 import javax.inject.Inject
 
 class SearchPresenter @Inject constructor(private val service: ApiService) :
-    SearchContract.Presenter {
+    SearchInputContract.Presenter {
+
     private val compositeDisposable = CompositeDisposable()
 
     override fun getUser(userId: String) {

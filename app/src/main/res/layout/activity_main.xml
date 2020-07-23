@@ -13,4 +13,11 @@
         android:layout_height="wrap_content"
         />
 
+    <fragment
+        android:name="com.example.githubproject.userinfo.UserInfoFragment"
+        android:id="@+id/user_info_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+
 </LinearLayout>
