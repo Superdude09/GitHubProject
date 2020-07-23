@@ -1,6 +1,7 @@
 package com.example.githubproject.di
 
 import ApplicationScope
+import com.example.githubproject.network.ApiService
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
@@ -22,4 +23,7 @@ class RetrofitModule {
 
     @Provides
     fun getOkHttpClient() = OkHttpClient.Builder().build()
+
+    @Provides
+    fun provideApiService(retrofit: Retrofit) = retrofit.create(ApiService::class.java)
 }
