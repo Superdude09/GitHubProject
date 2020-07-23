@@ -7,8 +7,8 @@ import com.example.githubproject.search.SearchPresenter
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity(), SearchContract.View {
-    @Inject
-    protected lateinit var presenter: SearchPresenter
+//    @Inject
+//    protected lateinit var presenter: SearchPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -18,7 +18,4 @@ class MainActivity : AppCompatActivity(), SearchContract.View {
 
     }
 
-    override fun onStart() {
-        super.onStart()
-    }
 }
