@@ -1,6 +1,6 @@
 package com.example.githubproject.network
 
-import com.example.githubproject.userinfo.model.UserResponse
+import com.example.githubproject.network.response.UserResponse
 import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Path
