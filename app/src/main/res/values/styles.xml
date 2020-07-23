@@ -8,4 +8,10 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="SearchInputLayoutAppearance" parent="Widget.Design.TextInputLayout">
+        <item name="colorControlNormal">#c5c5c5</item>
+        <item name="colorControlActivated">#DC1AE3</item>
+        <item name="colorControlHighlight">#DC1AE3</item>
+    </style>
+
 </resources>
