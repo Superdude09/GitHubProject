@@ -1,11 +1,9 @@
 package com.example.githubproject.userinfo
 
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.githubproject.userinfo.model.UserRepo
 import timber.log.Timber
-import java.lang.IndexOutOfBoundsException
 
 class UserReposListAdapter(private val listUserRepos: List<UserRepo>) : RecyclerView.Adapter<UserReposListAdapter.UserRepoViewHolder>() {
 
