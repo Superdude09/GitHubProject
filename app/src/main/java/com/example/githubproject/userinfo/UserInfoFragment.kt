@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.githubproject.GitHubProjectApplication
@@ -21,7 +22,6 @@ class UserInfoFragment : Fragment(), UserInfoContract.View  {
     lateinit var presenter: UserInfoPresenter
 
     private var userInfoListAdapter: UserReposListAdapter? = null
-//    private val listUserRepos = mutableListOf(UserRepo("foo", "bar", "blee", 1, 3))
     private val listUserRepos = mutableListOf<UserRepo>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -69,12 +69,23 @@ class UserInfoFragment : Fragment(), UserInfoContract.View  {
     override fun displayUserInfo(userInfo: UserInfo) {
         tv_user_id.text = userInfo.userId
         Picasso.get().load(userInfo.avatarUrl).into(user_avatar)
+
+        doFadeInAnimation(tv_user_id)
+        doFadeInAnimation(user_avatar)
     }
 
     override fun displayUserRepos(userRepos: List<UserRepo>) {
         listUserRepos.clear()
         listUserRepos.addAll(userRepos)
         userInfoListAdapter?.notifyDataSetChanged()
+
+        doFadeInAnimation(rv_user_repos)
+    }
+
+    private fun doFadeInAnimation(viewToAnimate: View) {
+        AnimationUtils.loadAnimation(context, R.anim.view_fade_in_anim).also {
+                animation -> viewToAnimate.startAnimation(animation)
+        }
     }
 
     fun doSearch(userId: String) {
