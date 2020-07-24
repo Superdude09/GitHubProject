@@ -11,11 +11,12 @@ class UserReposListAdapter(private val listUserRepos: List<UserRepo>) : Recycler
 
     private var onUserRepoClickListener: OnUserRepoCLickListener? = null
 
+    @FunctionalInterface
     interface OnUserRepoCLickListener {
         fun onUserRepoClick(userRepo: UserRepo)
     }
 
-    class UserRepoViewHolder(val userRepoItemView: TextView) :
+    class UserRepoViewHolder(val userRepoItemView: UserRepoComponent) :
         RecyclerView.ViewHolder(userRepoItemView) {
 
         fun bind(userRepo: UserRepo, listener: OnUserRepoCLickListener) {
@@ -27,15 +28,24 @@ class UserReposListAdapter(private val listUserRepos: List<UserRepo>) : Recycler
         onUserRepoClickListener = listener
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = UserRepoViewHolder(TextView(parent.context))
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = UserRepoViewHolder(UserRepoComponent(parent.context))
 
     override fun getItemCount() = listUserRepos.size
 
     override fun onBindViewHolder(holder: UserRepoViewHolder, position: Int) {
         try {
             val userRepo = listUserRepos[position]
-            holder.userRepoItemView.text = userRepo.name    // TODO: Flesh this part out with custom component
-            onUserRepoClickListener?.let { holder.bind(userRepo, it) }
+            userRepo.name?.let {
+                holder.userRepoItemView.setName(it)
+            }
+
+            userRepo.description?.let {
+                holder.userRepoItemView.setDescription(it)
+            }
+
+            onUserRepoClickListener?.let {
+                holder.bind(userRepo, it)
+            }
         } catch (ex: IndexOutOfBoundsException) {
             Timber.e(ex)
         }

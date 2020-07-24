@@ -1,17 +1,13 @@
 package com.example.githubproject.search
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.InputMethodManager
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import com.example.githubproject.R
 import com.example.githubproject.common.Util
 import kotlinx.android.synthetic.main.layout_search_input.*
-import javax.inject.Inject
 
 class SearchInputFragment : Fragment() {
     internal var callback: OnSearchSubmittedListener? = null
@@ -33,7 +29,6 @@ class SearchInputFragment : Fragment() {
             val searchInput = search_input_edit_text.text
             callback?.onSearchSubmitted(searchInput.toString())
 
-            // TODO: Hide keyboard
             Util.hideSoftKeyboard(requireActivity(), search_input_edit_text)
         }
     }
@@ -42,6 +37,7 @@ class SearchInputFragment : Fragment() {
         this.callback = callback
     }
 
+    @FunctionalInterface
     interface OnSearchSubmittedListener {
         fun onSearchSubmitted(searchValue: String)
     }
