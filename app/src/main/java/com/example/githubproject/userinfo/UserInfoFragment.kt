@@ -5,18 +5,24 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.githubproject.GitHubProjectApplication
 import com.example.githubproject.R
 import com.example.githubproject.userinfo.model.UserInfo
 import com.example.githubproject.userinfo.model.UserRepo
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.layout_user_info.*
+import timber.log.Timber
 import javax.inject.Inject
 
 class UserInfoFragment : Fragment(), UserInfoContract.View  {
 
     @Inject
     lateinit var presenter: UserInfoPresenter
+
+    private var userInfoListAdapter: UserReposListAdapter? = null
+//    private val listUserRepos = mutableListOf(UserRepo("foo", "bar", "blee", 1, 3))
+    private val listUserRepos = mutableListOf<UserRepo>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,13 +40,29 @@ class UserInfoFragment : Fragment(), UserInfoContract.View  {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        initializeUserReposRecyclerView()
         presenter.bindView(this)
+    }
+
+    private fun initializeUserReposRecyclerView() {
+        val layoutManager = LinearLayoutManager(context)
+        userInfoListAdapter = UserReposListAdapter(listUserRepos)
+        userInfoListAdapter?.setOnUserRepoClickListener(object: UserReposListAdapter.OnUserRepoCLickListener {
+            override fun onUserRepoClick(userRepo: UserRepo) {
+//                TODO("Not yet implemented")
+                Timber.d("Clicked on user repo with name ${userRepo.name}")
+            }
+        })
+
+        rv_user_repos.apply {
+            setHasFixedSize(true)
+            setLayoutManager(layoutManager)
+            adapter = userInfoListAdapter
+        }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-
         presenter.unbindView()
     }
 
@@ -50,7 +72,9 @@ class UserInfoFragment : Fragment(), UserInfoContract.View  {
     }
 
     override fun displayUserRepos(userRepos: List<UserRepo>) {
-//        TODO("Not yet implemented")
+        listUserRepos.clear()
+        listUserRepos.addAll(userRepos)
+        userInfoListAdapter?.notifyDataSetChanged()
     }
 
     fun doSearch(userId: String) {
