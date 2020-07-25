@@ -13,13 +13,15 @@ import timber.log.Timber
 import javax.inject.Inject
 
 class UserInfoPresenter @Inject constructor(private val service: ApiService) :
-    UserInfoContract.Presenter, BasePresenter<UserInfoFragment>() {
+    UserInfoContract.Presenter, BasePresenter<UserInfoContract.View>() {
 
     private var userId: String? = null
 
     private val compositeDisposable = CompositeDisposable()
 
     override fun getUser(userId: String) {
+        Timber.d("Going to retrieve user info")
+
         this.userId = userId
 
         compositeDisposable.add(
@@ -32,6 +34,8 @@ class UserInfoPresenter @Inject constructor(private val service: ApiService) :
     }
 
     private fun getUserRepos(userId: String) {
+        Timber.d("Going to retrieve user repo info")
+
         compositeDisposable.add(
             service.getUserPublicRepos(userId)
                 .subscribeOn(Schedulers.io())
