@@ -50,7 +50,7 @@ class UserInfoPresenter @Inject constructor(private val service: ApiService) :
     }
 
     private fun onGetUserInfoSuccess(userInfo: UserInfo) {
-        Timber.d("Successfully retrieved user info: ${userInfo.toString()}")
+        Timber.d("Successfully retrieved user info: $userInfo")
 
         view?.displayUserInfo(userInfo)
 
@@ -82,7 +82,7 @@ class UserInfoPresenter @Inject constructor(private val service: ApiService) :
     }
 
     private fun onGetUserReposSuccess(userRepos: List<UserRepo>) {
-        Timber.d("Successfully retrieved user repos: ${userRepos.toString()}")
+        Timber.d("Successfully retrieved user repos: $userRepos")
 
         view?.displayUserRepos(userRepos)
     }

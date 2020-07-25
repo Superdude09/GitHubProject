@@ -9,7 +9,6 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.githubproject.GitHubProjectApplication
 import com.example.githubproject.R
-import com.example.githubproject.search.SearchInputFragment
 import com.example.githubproject.userinfo.model.UserInfo
 import com.example.githubproject.userinfo.model.UserRepo
 import com.squareup.picasso.Picasso

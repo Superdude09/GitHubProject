@@ -5,19 +5,11 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import androidx.cardview.widget.CardView
 import com.example.githubproject.R
-import com.example.githubproject.common.util.AndroidUtil
 import kotlinx.android.synthetic.main.layout_user_repo_list_item.view.*
 
 class UserRepoComponent @JvmOverloads constructor(context: Context,
                                                   attrs: AttributeSet? = null,
                                                   defStyleAttr: Int = 0) : CardView(context, attrs, defStyleAttr) {
-    companion object{
-        const val CONTENT_PADDING_IN_DP = 8f
-        const val MARGIN_IN_DP = 8f
-        const val ELEVATION_IN_DP = 4f
-        const val CORNER_RADIUS_IN_DP = 2f
-    }
-
    init {
        inflate()
        initialize()

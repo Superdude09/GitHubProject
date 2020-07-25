@@ -11,7 +11,6 @@ import com.example.githubproject.common.util.DateUtil
 import com.example.githubproject.userinfo.model.UserRepo
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kotlinx.android.synthetic.main.layout_user_info_bottom_sheet.*
-import java.text.SimpleDateFormat
 
 class UserRepoBottomSheetDialogFragment : BottomSheetDialogFragment() {
 
