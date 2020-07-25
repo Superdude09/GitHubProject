@@ -31,15 +31,15 @@ class UserRepoComponent @JvmOverloads constructor(context: Context,
     private fun initialize() {
         layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT)
 
-        val marginInDP = AndroidUtil.convertDpToPixel(MARGIN_IN_DP, context).toInt()
+        val marginInDP = resources.getDimensionPixelSize(R.dimen.dimen_8_dp)
         (layoutParams as MarginLayoutParams).setMargins(0, 0, 0, marginInDP)
 
-        val paddingInDP = AndroidUtil.convertDpToPixel(CONTENT_PADDING_IN_DP, context).toInt()
+        val paddingInDP = resources.getDimensionPixelSize(R.dimen.dimen_8_dp)
         setContentPadding(paddingInDP, paddingInDP, paddingInDP, paddingInDP)
 
-        elevation = AndroidUtil.convertDpToPixel(ELEVATION_IN_DP, context)
+        elevation = resources.getDimensionPixelSize(R.dimen.dimen_8_dp).toFloat()
 
-        radius = AndroidUtil.convertDpToPixel(CORNER_RADIUS_IN_DP, context)
+        radius = resources.getDimensionPixelSize(R.dimen.corner_radius).toFloat()
 
         useCompatPadding = true
     }

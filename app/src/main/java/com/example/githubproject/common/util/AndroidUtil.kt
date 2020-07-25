@@ -13,17 +13,5 @@ class AndroidUtil {
                 context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             imm.hideSoftInputFromWindow(view.windowToken, 0)
         }
-
-        fun convertDpToPixel(dp: Float, context: Context): Float {
-            // TODO: replace with resources.getDimensionPixelSize(R.dimen.dimen_16_dp)?
-            return dp * (context.resources
-                .displayMetrics.densityDpi.toFloat() / DisplayMetrics.DENSITY_DEFAULT)
-        }
-
-        fun convertPixelsToDp(px: Float, context: Context): Float {
-            return px / (context.resources
-                .displayMetrics.densityDpi.toFloat() / DisplayMetrics.DENSITY_DEFAULT)
-        }
     }
-
 }
