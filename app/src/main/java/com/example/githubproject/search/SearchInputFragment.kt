@@ -31,7 +31,7 @@ class SearchInputFragment : Fragment() {
     }
 
     private fun initButton() {
-        searchButton.setOnClickListener {
+        search_button.setOnClickListener {
             val searchInput = search_input_edit_text.text
             callback?.onSearchSubmitted(searchInput.toString())
 

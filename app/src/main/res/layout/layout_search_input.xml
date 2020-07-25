@@ -12,7 +12,7 @@
         android:layout_margin="@dimen/dimen_12_dp"
         android:hint="@string/search_input_layout_hint"
         android:theme="@style/SearchInputLayoutAppearance"
-        app:layout_constraintEnd_toStartOf="@+id/searchButton"
+        app:layout_constraintEnd_toStartOf="@+id/search_button"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -24,7 +24,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
-        android:id="@+id/searchButton"
+        android:id="@+id/search_button"
         style="?attr/materialButtonOutlinedStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

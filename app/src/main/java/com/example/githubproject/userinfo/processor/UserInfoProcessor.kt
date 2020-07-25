@@ -7,5 +7,5 @@ import com.example.githubproject.userinfo.model.UserRepoInfo
 
 interface UserInfoProcessor {
     fun processUserInfo(userInfoDTO: UserInfoResponse): UserInfo
-    fun processUserRepo(userRepoDTO: UserRepoInfoResponse): UserRepoInfo
+    fun processUserRepoInfo(userRepoDTO: UserRepoInfoResponse): UserRepoInfo
 }
