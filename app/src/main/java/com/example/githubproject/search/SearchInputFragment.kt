@@ -10,6 +10,12 @@ import com.example.githubproject.common.Util
 import kotlinx.android.synthetic.main.layout_search_input.*
 
 class SearchInputFragment : Fragment() {
+
+    @FunctionalInterface
+    interface OnSearchSubmittedListener {
+        fun onSearchSubmitted(searchValue: String)
+    }
+
     internal var callback: OnSearchSubmittedListener? = null
 
     override fun onCreateView(
@@ -33,12 +39,7 @@ class SearchInputFragment : Fragment() {
         }
     }
 
-    fun setOnHeadlineSelectedListener(callback: OnSearchSubmittedListener) {
+    fun setOnSearchSubmittedListener(callback: OnSearchSubmittedListener) {
         this.callback = callback
-    }
-
-    @FunctionalInterface
-    interface OnSearchSubmittedListener {
-        fun onSearchSubmitted(searchValue: String)
     }
 }

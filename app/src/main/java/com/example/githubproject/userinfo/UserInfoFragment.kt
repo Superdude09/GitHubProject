@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.githubproject.GitHubProjectApplication
 import com.example.githubproject.R
+import com.example.githubproject.search.SearchInputFragment
 import com.example.githubproject.userinfo.model.UserInfo
 import com.example.githubproject.userinfo.model.UserRepo
 import com.squareup.picasso.Picasso
@@ -16,10 +17,17 @@ import kotlinx.android.synthetic.main.layout_user_info.*
 import timber.log.Timber
 import javax.inject.Inject
 
-class UserInfoFragment : Fragment(), UserInfoContract.View  {
+class UserInfoFragment : Fragment(), UserInfoContract.View {
+
+    @FunctionalInterface
+    interface OnUserRepoClickListener {
+        fun onUserRepoClicked(userRepo: UserRepo)
+    }
 
     @Inject
     lateinit var presenter: UserInfoPresenter
+
+    internal var callback: OnUserRepoClickListener? = null
 
     private var userInfoListAdapter: UserReposListAdapter? = null
     private val listUserRepos = mutableListOf<UserRepo>()
@@ -33,10 +41,7 @@ class UserInfoFragment : Fragment(), UserInfoContract.View  {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
-
-        return inflater.inflate(R.layout.layout_user_info, container, false)
-    }
+    ): View = inflater.inflate(R.layout.layout_user_info, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -47,10 +52,12 @@ class UserInfoFragment : Fragment(), UserInfoContract.View  {
     private fun initializeUserReposRecyclerView() {
         val layoutManager = LinearLayoutManager(context)
         userInfoListAdapter = UserReposListAdapter(listUserRepos)
-        userInfoListAdapter?.setOnUserRepoClickListener(object: UserReposListAdapter.OnUserRepoCLickListener {
+        userInfoListAdapter?.setOnUserRepoClickListener(object :
+            UserReposListAdapter.OnUserRepoCLickListener {
+
             override fun onUserRepoClick(userRepo: UserRepo) {
-//                TODO("Not yet implemented")
                 Timber.d("Clicked on user repo with name ${userRepo.name}")
+                callback?.onUserRepoClicked(userRepo)
             }
         })
 
@@ -83,12 +90,16 @@ class UserInfoFragment : Fragment(), UserInfoContract.View  {
     }
 
     private fun doFadeInAnimation(viewToAnimate: View) {
-        AnimationUtils.loadAnimation(context, R.anim.view_fade_in_anim).also {
-                animation -> viewToAnimate.startAnimation(animation)
+        AnimationUtils.loadAnimation(context, R.anim.view_fade_in_anim).also { animation ->
+            viewToAnimate.startAnimation(animation)
         }
     }
 
     fun doSearch(userId: String) {
         presenter.getUser(userId)
+    }
+
+    fun setOnUserRepoClickedListener(callback: OnUserRepoClickListener) {
+        this.callback = callback
     }
 }
