@@ -14,9 +14,10 @@ import org.junit.Before
 import org.junit.Test
 import org.mockito.Mock
 import org.mockito.Mockito
-import org.mockito.Mockito.times
-import org.mockito.Mockito.verify
+import org.mockito.Mockito.*
 import org.mockito.MockitoAnnotations
+import retrofit2.HttpException
+import java.lang.RuntimeException
 import java.util.concurrent.Callable
 
 
@@ -37,7 +38,7 @@ class UserInfoPresenterTest {
         MockitoAnnotations.initMocks(this)
 
         // Make sure that trampoline scheduler is used instead of Android's main thread
-        RxAndroidPlugins.setInitMainThreadSchedulerHandler { scheduler: Callable<Scheduler?>? -> Schedulers.trampoline() }
+        RxAndroidPlugins.setInitMainThreadSchedulerHandler { Schedulers.trampoline() }
 
         presenter = UserInfoPresenter(service, userInfoProcessor)
         presenter.bindView(view)
@@ -47,8 +48,8 @@ class UserInfoPresenterTest {
     fun getUser() {
         val userId = "someUserId"
 
-        Mockito.`when`(service.getUser(userId)).thenReturn(Single.just(getMockUserInfoResponse()))
-        Mockito.`when`(service.getUserPublicRepos(userId))
+        `when`(service.getUser(userId)).thenReturn(Single.just(getMockUserInfoResponse()))
+        `when`(service.getUserPublicRepos(userId))
             .thenReturn(Single.just(getMockUserReposResponse()))
 
         presenter.getUser(userId)
@@ -59,10 +60,38 @@ class UserInfoPresenterTest {
         verify(view, times(1)).displayUserRepos(getExpectedUserRepos())
     }
 
+    @Test
+    fun getUser_getUserFails() {
+        val userId = "someUserId"
+
+        `when`(service.getUser(userId)).thenReturn(Single.error(RuntimeException()))
+
+        presenter.getUser(userId)
+
+        verify(service, times(1)).getUser(userId)
+        verify(view, times(1)).handleUserInfoError()
+    }
+
+    @Test
+    fun getUser_getUserPublicRepoFails() {
+        val userId = "someUserId"
+
+        `when`(service.getUser(userId)).thenReturn(Single.just(getMockUserInfoResponse()))
+        `when`(service.getUserPublicRepos(userId))
+            .thenReturn(Single.error(RuntimeException()))
+
+        presenter.getUser(userId)
+
+        verify(service, times(1)).getUser(userId)
+        verify(service, times(1)).getUserPublicRepos(userId)
+        verify(view, times(1)).displayUserInfo(getExpectedUserInfo())
+        verify(view, times(1)).handleUserRepoInfoError()
+    }
+
     private fun getMockUserInfoResponse() =
         UserInfoResponse("UserId", "https://www.somewhere.com/img.png")
 
-    private fun getExpectedUserInfo() = UserInfo("UserId", "https://www.somewhere.com/img.png")
+    private fun getExpectedUserInfo() = userInfoProcessor.processUserInfo(getMockUserInfoResponse())
 
     private fun getMockUserReposResponse() = listOf(
         UserRepoInfoResponse(
@@ -74,13 +103,13 @@ class UserInfoPresenterTest {
         )
     )
 
-    private fun getExpectedUserRepos() = listOf(
-        UserRepoInfo(
-            "Some repo name",
-            "Some repo description",
-            "Some Updated At date",
-            4,
-            6
-        )
-    )
+    private fun getExpectedUserRepos(): List<UserRepoInfo> {
+        val listUserRepoInfo = mutableListOf<UserRepoInfo>()
+
+        for (userRepoInfoResponse in getMockUserReposResponse()) {
+            listUserRepoInfo.add(userInfoProcessor.processUserRepoInfo(userRepoInfoResponse))
+        }
+
+        return listUserRepoInfo
+    }
 }

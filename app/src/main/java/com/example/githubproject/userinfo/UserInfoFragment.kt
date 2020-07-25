@@ -88,6 +88,16 @@ class UserInfoFragment : Fragment(), UserInfoContract.View {
         doFadeInAnimation(rv_user_repos)
     }
 
+    override fun handleUserInfoError() {
+        // Could have things like error dialog, inline errors, etc.
+        Timber.e("Something when wrong when getting UserInfo")
+    }
+
+    override fun handleUserRepoInfoError() {
+        // Could have things like error dialog, inline errors, etc.
+        Timber.e("Something when wrong when getting UserRepoInfo")
+    }
+
     private fun doFadeInAnimation(viewToAnimate: View) {
         AnimationUtils.loadAnimation(context, R.anim.view_fade_in_anim).also { animation ->
             viewToAnimate.startAnimation(animation)
