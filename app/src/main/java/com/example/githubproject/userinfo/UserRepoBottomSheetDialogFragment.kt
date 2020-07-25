@@ -42,10 +42,20 @@ class UserRepoBottomSheetDialogFragment : BottomSheetDialogFragment() {
         super.onActivityCreated(savedInstanceState)
 
         setBackgroundColor(Color.TRANSPARENT)
+        adjustMargins()
     }
 
     private fun setBackgroundColor(@ColorInt colorId: Int) {
         (view?.parent as View).setBackgroundColor(colorId)
+    }
+
+    private fun adjustMargins() {
+        val marginsInDP = resources.getDimensionPixelSize(R.dimen.dimen_8_dp)
+
+        val layoutParams = view?.layoutParams as ViewGroup.MarginLayoutParams
+        layoutParams.setMargins(marginsInDP, marginsInDP, marginsInDP, marginsInDP)
+
+        view?.layoutParams = layoutParams
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
