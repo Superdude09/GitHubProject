@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity(),
         val userInfoFragment =
             supportFragmentManager.findFragmentById(R.id.user_info_fragment) as UserInfoFragment
 
-        userInfoFragment?.let {
+        userInfoFragment.let {
             userInfoFragment.doSearch(searchValue)
         }
     }

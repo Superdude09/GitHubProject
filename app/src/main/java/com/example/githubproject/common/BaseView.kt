@@ -1,4 +1,3 @@
 package com.example.githubproject.common
 
-interface BaseView {
-}
+interface BaseView

@@ -16,7 +16,7 @@ class SearchInputFragment : Fragment() {
         fun onSearchSubmitted(searchValue: String)
     }
 
-    internal var callback: OnSearchSubmittedListener? = null
+    private var callback: OnSearchSubmittedListener? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
