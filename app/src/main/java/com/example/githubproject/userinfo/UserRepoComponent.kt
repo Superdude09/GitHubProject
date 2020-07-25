@@ -5,7 +5,7 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import androidx.cardview.widget.CardView
 import com.example.githubproject.R
-import com.example.githubproject.common.Util
+import com.example.githubproject.common.util.AndroidUtil
 import kotlinx.android.synthetic.main.layout_user_repo_list_item.view.*
 
 class UserRepoComponent @JvmOverloads constructor(context: Context,
@@ -31,15 +31,15 @@ class UserRepoComponent @JvmOverloads constructor(context: Context,
     private fun initialize() {
         layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT)
 
-        val marginInDP = Util.convertDpToPixel(MARGIN_IN_DP, context).toInt()
+        val marginInDP = resources.getDimensionPixelSize(R.dimen.dimen_8_dp)
         (layoutParams as MarginLayoutParams).setMargins(0, 0, 0, marginInDP)
 
-        val paddingInDP = Util.convertDpToPixel(CONTENT_PADDING_IN_DP, context).toInt()
+        val paddingInDP = resources.getDimensionPixelSize(R.dimen.dimen_8_dp)
         setContentPadding(paddingInDP, paddingInDP, paddingInDP, paddingInDP)
 
-        elevation = Util.convertDpToPixel(ELEVATION_IN_DP, context)
+        elevation = resources.getDimensionPixelSize(R.dimen.dimen_8_dp).toFloat()
 
-        radius = Util.convertDpToPixel(CORNER_RADIUS_IN_DP, context)
+        radius = resources.getDimensionPixelSize(R.dimen.corner_radius).toFloat()
 
         useCompatPadding = true
     }
