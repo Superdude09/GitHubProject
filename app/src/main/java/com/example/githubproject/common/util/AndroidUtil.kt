@@ -15,6 +15,7 @@ class AndroidUtil {
         }
 
         fun convertDpToPixel(dp: Float, context: Context): Float {
+            // TODO: replace with resources.getDimensionPixelSize(R.dimen.dimen_16_dp)?
             return dp * (context.resources
                 .displayMetrics.densityDpi.toFloat() / DisplayMetrics.DENSITY_DEFAULT)
         }

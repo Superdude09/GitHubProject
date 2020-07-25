@@ -1,20 +1,25 @@
 package com.example.githubproject.userinfo
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.ColorInt
 import com.example.githubproject.R
+import com.example.githubproject.common.util.DateUtil
 import com.example.githubproject.userinfo.model.UserRepo
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kotlinx.android.synthetic.main.layout_user_info_bottom_sheet.*
-import java.text.DateFormat
 import java.text.SimpleDateFormat
 
 class UserRepoBottomSheetDialogFragment : BottomSheetDialogFragment() {
 
     companion object {
-        private val PARAM_USER_REPO = "PARAM_USER_REPO"
+        private const val PARAM_USER_REPO = "PARAM_USER_REPO"
+
+        private const val DATE_FORMAT_FROM_RESPONSE = "yyyy-MM-dd'T'HH:mm:ss'Z'"
+        private const val DATE_FORMAT_TO_DISPLAY = "MMM dd, yyyy HH:mm:ss a"
 
         fun getInstance(userRepo: UserRepo) : UserRepoBottomSheetDialogFragment {
             val fragment = UserRepoBottomSheetDialogFragment()
@@ -33,6 +38,16 @@ class UserRepoBottomSheetDialogFragment : BottomSheetDialogFragment() {
         savedInstanceState: Bundle?
     ): View = layoutInflater.inflate(R.layout.layout_user_info_bottom_sheet, container, false)
 
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
+        setBackgroundColor(Color.TRANSPARENT)
+    }
+
+    private fun setBackgroundColor(@ColorInt colorId: Int) {
+        (view?.parent as View).setBackgroundColor(colorId)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -40,14 +55,8 @@ class UserRepoBottomSheetDialogFragment : BottomSheetDialogFragment() {
 
         userRepoInfo?.let {
             val rawUpdateAt = it.updatedAt
+            val formattedUpdateAt = if (rawUpdateAt != null) DateUtil.convertDateStringFormat(rawUpdateAt, DATE_FORMAT_FROM_RESPONSE, DATE_FORMAT_TO_DISPLAY) else ""
 
-            // 2020-07-23T02:16:26Z
-            // 2001-07-04T12:08:56.235-0700
-            // Jul 6, 2017 12:15:11 AM
-            val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'")
-            val dateUpdateAt = dateFormat.parse(rawUpdateAt)
-            dateFormat.applyPattern("MMM dd, yyyy HH:mm:ss a")
-            val formattedUpdateAt = dateFormat.format(dateUpdateAt)
             val stars = it.stargazersCount
             val forks = it.forks
 
