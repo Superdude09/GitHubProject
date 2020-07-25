@@ -1,6 +1,8 @@
 package com.example.githubproject.common.util
 
 import timber.log.Timber
+import java.lang.IllegalArgumentException
+import java.lang.NullPointerException
 import java.text.ParseException
 import java.text.SimpleDateFormat
 
@@ -13,6 +15,12 @@ class DateUtil {
                 dateFormat.applyPattern(newFormat)
                 dateFormat.format(dateUpdateAt)
             } catch (ex: ParseException) {
+                Timber.e(ex)
+                null
+            } catch (ex: IllegalArgumentException) {
+                Timber.e(ex)
+                null
+            } catch (ex: NullPointerException) {
                 Timber.e(ex)
                 null
             }
