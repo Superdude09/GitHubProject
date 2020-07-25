@@ -6,13 +6,14 @@ import com.example.githubproject.network.response.UserReposResponse
 import com.example.githubproject.network.response.UserResponse
 import com.example.githubproject.userinfo.model.UserInfo
 import com.example.githubproject.userinfo.model.UserRepo
+import com.example.githubproject.userinfo.processor.UserInfoProcessor
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
 import javax.inject.Inject
 
-class UserInfoPresenter @Inject constructor(private val service: ApiService) :
+class UserInfoPresenter @Inject constructor(private val service: ApiService, private val userInfoProcessor: UserInfoProcessor) :
     UserInfoContract.Presenter, BasePresenter<UserInfoContract.View>() {
 
     private var userId: String? = null
@@ -49,9 +50,7 @@ class UserInfoPresenter @Inject constructor(private val service: ApiService) :
         compositeDisposable.clear()
     }
 
-    private fun processUserInfoResponse(userInfoDTO: UserResponse): UserInfo {
-        return UserInfo(userInfoDTO.name, userInfoDTO.avatarUrl)
-    }
+    private fun processUserInfoResponse(userInfoDTO: UserResponse) = userInfoProcessor.processUserInfo(userInfoDTO)
 
     private fun onGetUserInfoSuccess(userInfo: UserInfo) {
         Timber.d("Successfully retrieved user info: $userInfo")
@@ -72,13 +71,7 @@ class UserInfoPresenter @Inject constructor(private val service: ApiService) :
 
         for (userRepoDTO in userReposDTOs) {
             listUserRepos.add(
-                UserRepo(
-                    userRepoDTO.name,
-                    userRepoDTO.description,
-                    userRepoDTO.updatedAt,
-                    userRepoDTO.stargazersCount,
-                    userRepoDTO.forks
-                )
+                userInfoProcessor.processUserRepo(userRepoDTO)
             )
         }
 

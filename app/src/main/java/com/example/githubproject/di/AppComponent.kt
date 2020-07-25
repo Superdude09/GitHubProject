@@ -9,7 +9,8 @@ import javax.inject.Singleton
 @Singleton
 @Component(
     modules = [RetrofitModule::class,
-        PresenterModule::class]
+        PresenterModule::class,
+        ProcessorModule::class]
 )
 interface AppComponent {
     fun getApiService(): ApiService
