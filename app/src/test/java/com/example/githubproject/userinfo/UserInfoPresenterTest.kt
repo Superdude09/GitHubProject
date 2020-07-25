@@ -1,10 +1,10 @@
 package com.example.githubproject.userinfo
 
 import com.example.githubproject.network.ApiService
-import com.example.githubproject.network.response.UserReposResponse
-import com.example.githubproject.network.response.UserResponse
+import com.example.githubproject.network.response.UserRepoInfoResponse
+import com.example.githubproject.network.response.UserInfoResponse
 import com.example.githubproject.userinfo.model.UserInfo
-import com.example.githubproject.userinfo.model.UserRepo
+import com.example.githubproject.userinfo.model.UserRepoInfo
 import io.reactivex.Scheduler
 import io.reactivex.Single
 import io.reactivex.android.plugins.RxAndroidPlugins
@@ -57,12 +57,12 @@ class UserInfoPresenterTest {
     }
 
     private fun getMockUserInfoResponse() =
-        UserResponse("UserId", "https://www.somewhere.com/img.png")
+        UserInfoResponse("UserId", "https://www.somewhere.com/img.png")
 
     private fun getExpectedUserInfo() = UserInfo("UserId", "https://www.somewhere.com/img.png")
 
     private fun getMockUserReposResponse() = listOf(
-        UserReposResponse(
+        UserRepoInfoResponse(
             "Some repo name",
             "Some repo description",
             "Some Updated At date",
@@ -72,7 +72,7 @@ class UserInfoPresenterTest {
     )
 
     private fun getExpectedUserRepos() = listOf(
-        UserRepo(
+        UserRepoInfo(
             "Some repo name",
             "Some repo description",
             "Some Updated At date",

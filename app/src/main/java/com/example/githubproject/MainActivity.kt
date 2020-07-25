@@ -6,7 +6,7 @@ import androidx.fragment.app.Fragment
 import com.example.githubproject.search.SearchInputFragment
 import com.example.githubproject.userinfo.UserInfoFragment
 import com.example.githubproject.userinfo.UserRepoBottomSheetDialogFragment
-import com.example.githubproject.userinfo.model.UserRepo
+import com.example.githubproject.userinfo.model.UserRepoInfo
 
 class MainActivity : AppCompatActivity(),
     SearchInputFragment.OnSearchSubmittedListener,
@@ -37,8 +37,8 @@ class MainActivity : AppCompatActivity(),
         }
     }
 
-    override fun onUserRepoClicked(userRepo: UserRepo) {
-        val bottomSheetDialogFragment = UserRepoBottomSheetDialogFragment.getInstance(userRepo)
+    override fun onUserRepoClicked(userRepoInfo: UserRepoInfo) {
+        val bottomSheetDialogFragment = UserRepoBottomSheetDialogFragment.getInstance(userRepoInfo)
         bottomSheetDialogFragment.show(
             supportFragmentManager,
             UserRepoBottomSheetDialogFragment::class.java.canonicalName

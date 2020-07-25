@@ -2,23 +2,23 @@ package com.example.githubproject.userinfo
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.githubproject.userinfo.model.UserRepo
+import com.example.githubproject.userinfo.model.UserRepoInfo
 import timber.log.Timber
 
-class UserReposListAdapter(private val listUserRepos: List<UserRepo>) : RecyclerView.Adapter<UserReposListAdapter.UserRepoViewHolder>() {
+class UserReposListAdapter(private val listUserRepoInfo: List<UserRepoInfo>) : RecyclerView.Adapter<UserReposListAdapter.UserRepoViewHolder>() {
 
     private var onUserRepoClickListener: OnUserRepoCLickListener? = null
 
     @FunctionalInterface
     interface OnUserRepoCLickListener {
-        fun onUserRepoClick(userRepo: UserRepo)
+        fun onUserRepoClick(userRepoInfo: UserRepoInfo)
     }
 
     class UserRepoViewHolder(val userRepoItemView: UserRepoComponent) :
         RecyclerView.ViewHolder(userRepoItemView) {
 
-        fun bind(userRepo: UserRepo, listener: OnUserRepoCLickListener) {
-            userRepoItemView.setOnClickListener { listener.onUserRepoClick(userRepo) }
+        fun bind(userRepoInfo: UserRepoInfo, listener: OnUserRepoCLickListener) {
+            userRepoItemView.setOnClickListener { listener.onUserRepoClick(userRepoInfo) }
         }
     }
 
@@ -28,11 +28,11 @@ class UserReposListAdapter(private val listUserRepos: List<UserRepo>) : Recycler
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = UserRepoViewHolder(UserRepoComponent(parent.context))
 
-    override fun getItemCount() = listUserRepos.size
+    override fun getItemCount() = listUserRepoInfo.size
 
     override fun onBindViewHolder(holder: UserRepoViewHolder, position: Int) {
         try {
-            val userRepo = listUserRepos[position]
+            val userRepo = listUserRepoInfo[position]
             userRepo.name?.let {
                 holder.userRepoItemView.setName(it)
             }
