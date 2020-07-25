@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.githubproject.GitHubProjectApplication
 import com.example.githubproject.R
 import com.example.githubproject.userinfo.model.UserInfo
-import com.example.githubproject.userinfo.model.UserRepo
+import com.example.githubproject.userinfo.model.UserRepoInfo
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.layout_user_info.*
 import timber.log.Timber
@@ -20,7 +20,7 @@ class UserInfoFragment : Fragment(), UserInfoContract.View {
 
     @FunctionalInterface
     interface OnUserRepoClickListener {
-        fun onUserRepoClicked(userRepo: UserRepo)
+        fun onUserRepoClicked(userRepoInfo: UserRepoInfo)
     }
 
     @Inject
@@ -29,7 +29,7 @@ class UserInfoFragment : Fragment(), UserInfoContract.View {
     internal var callback: OnUserRepoClickListener? = null
 
     private var userInfoListAdapter: UserReposListAdapter? = null
-    private val listUserRepos = mutableListOf<UserRepo>()
+    private val listUserRepos = mutableListOf<UserRepoInfo>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,9 +54,9 @@ class UserInfoFragment : Fragment(), UserInfoContract.View {
         userInfoListAdapter?.setOnUserRepoClickListener(object :
             UserReposListAdapter.OnUserRepoCLickListener {
 
-            override fun onUserRepoClick(userRepo: UserRepo) {
-                Timber.d("Clicked on user repo with name ${userRepo.name}")
-                callback?.onUserRepoClicked(userRepo)
+            override fun onUserRepoClick(userRepoInfo: UserRepoInfo) {
+                Timber.d("Clicked on user repo with name ${userRepoInfo.name}")
+                callback?.onUserRepoClicked(userRepoInfo)
             }
         })
 
@@ -80,9 +80,9 @@ class UserInfoFragment : Fragment(), UserInfoContract.View {
         doFadeInAnimation(user_avatar)
     }
 
-    override fun displayUserRepos(userRepos: List<UserRepo>) {
+    override fun displayUserRepos(listUserRepoInfo: List<UserRepoInfo>) {
         listUserRepos.clear()
-        listUserRepos.addAll(userRepos)
+        listUserRepos.addAll(listUserRepoInfo)
         userInfoListAdapter?.notifyDataSetChanged()
 
         doFadeInAnimation(rv_user_repos)

@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.annotation.ColorInt
 import com.example.githubproject.R
 import com.example.githubproject.common.util.DateUtil
-import com.example.githubproject.userinfo.model.UserRepo
+import com.example.githubproject.userinfo.model.UserRepoInfo
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kotlinx.android.synthetic.main.layout_user_info_bottom_sheet.*
 
@@ -20,11 +20,11 @@ class UserRepoBottomSheetDialogFragment : BottomSheetDialogFragment() {
         private const val DATE_FORMAT_FROM_RESPONSE = "yyyy-MM-dd'T'HH:mm:ss'Z'"
         private const val DATE_FORMAT_TO_DISPLAY = "MMM dd, yyyy HH:mm:ss a"
 
-        fun getInstance(userRepo: UserRepo) : UserRepoBottomSheetDialogFragment {
+        fun getInstance(userRepoInfo: UserRepoInfo) : UserRepoBottomSheetDialogFragment {
             val fragment = UserRepoBottomSheetDialogFragment()
 
             val args = Bundle()
-            args.putParcelable(PARAM_USER_REPO, userRepo)
+            args.putParcelable(PARAM_USER_REPO, userRepoInfo)
             fragment.arguments = args
 
             return fragment
@@ -60,7 +60,7 @@ class UserRepoBottomSheetDialogFragment : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val userRepoInfo: UserRepo? = arguments?.getParcelable(PARAM_USER_REPO)
+        val userRepoInfo: UserRepoInfo? = arguments?.getParcelable(PARAM_USER_REPO)
 
         userRepoInfo?.let {
             val rawUpdateAt = it.updatedAt

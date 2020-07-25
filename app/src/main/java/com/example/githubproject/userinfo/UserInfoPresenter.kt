@@ -2,10 +2,10 @@ package com.example.githubproject.userinfo
 
 import com.example.githubproject.common.BasePresenter
 import com.example.githubproject.network.ApiService
-import com.example.githubproject.network.response.UserReposResponse
-import com.example.githubproject.network.response.UserResponse
+import com.example.githubproject.network.response.UserRepoInfoResponse
+import com.example.githubproject.network.response.UserInfoResponse
 import com.example.githubproject.userinfo.model.UserInfo
-import com.example.githubproject.userinfo.model.UserRepo
+import com.example.githubproject.userinfo.model.UserRepoInfo
 import com.example.githubproject.userinfo.processor.UserInfoProcessor
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -50,7 +50,7 @@ class UserInfoPresenter @Inject constructor(private val service: ApiService, pri
         compositeDisposable.clear()
     }
 
-    private fun processUserInfoResponse(userInfoDTO: UserResponse) = userInfoProcessor.processUserInfo(userInfoDTO)
+    private fun processUserInfoResponse(userInfoDTO: UserInfoResponse) = userInfoProcessor.processUserInfo(userInfoDTO)
 
     private fun onGetUserInfoSuccess(userInfo: UserInfo) {
         Timber.d("Successfully retrieved user info: $userInfo")
@@ -66,10 +66,10 @@ class UserInfoPresenter @Inject constructor(private val service: ApiService, pri
         Timber.e(throwable)
     }
 
-    private fun processUserReposResponse(userReposDTOs: List<UserReposResponse>): List<UserRepo> {
-        val listUserRepos = mutableListOf<UserRepo>()
+    private fun processUserReposResponse(userRepoInfoDTOs: List<UserRepoInfoResponse>): List<UserRepoInfo> {
+        val listUserRepos = mutableListOf<UserRepoInfo>()
 
-        for (userRepoDTO in userReposDTOs) {
+        for (userRepoDTO in userRepoInfoDTOs) {
             listUserRepos.add(
                 userInfoProcessor.processUserRepo(userRepoDTO)
             )
@@ -78,10 +78,10 @@ class UserInfoPresenter @Inject constructor(private val service: ApiService, pri
         return listUserRepos
     }
 
-    private fun onGetUserReposSuccess(userRepos: List<UserRepo>) {
-        Timber.d("Successfully retrieved user repos: $userRepos")
+    private fun onGetUserReposSuccess(listUserRepoInfo: List<UserRepoInfo>) {
+        Timber.d("Successfully retrieved user repos: $listUserRepoInfo")
 
-        view?.displayUserRepos(userRepos)
+        view?.displayUserRepos(listUserRepoInfo)
     }
 
     private fun onGetUserReposError(throwable: Throwable) {
