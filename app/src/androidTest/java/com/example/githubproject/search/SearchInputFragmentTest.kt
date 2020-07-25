@@ -8,7 +8,7 @@ import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.example.githubproject.R
-import com.example.githubproject.search.SearchInputFragment.*
+import com.example.githubproject.search.SearchInputFragment.OnSearchSubmittedListener
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mockito.*
@@ -16,7 +16,7 @@ import org.mockito.Mockito.*
 @RunWith(AndroidJUnit4::class)
 class SearchInputFragmentTest {
     @Test
-    fun testSearchInputFragmentViews() {
+    fun searchInputFragment_views() {
         launchFragmentInContainer<SearchInputFragment>(themeResId = R.style.AppTheme)
 
         onView(withId(R.id.search_button)).check(matches(withText("Search")))
@@ -24,7 +24,7 @@ class SearchInputFragmentTest {
     }
 
     @Test
-    fun testSearchInputFragment_searchButtonOnClick() {
+    fun searchInputFragment_searchButtonOnClick() {
         val scenario = launchFragmentInContainer<SearchInputFragment>(themeResId = R.style.AppTheme)
         val userId = "foobar"
 
