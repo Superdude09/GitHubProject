@@ -5,6 +5,7 @@ import com.example.githubproject.network.response.UserRepoInfoResponse
 import com.example.githubproject.network.response.UserInfoResponse
 import com.example.githubproject.userinfo.model.UserInfo
 import com.example.githubproject.userinfo.model.UserRepoInfo
+import com.example.githubproject.userinfo.processor.UserInfoProcessorImpl
 import io.reactivex.Scheduler
 import io.reactivex.Single
 import io.reactivex.android.plugins.RxAndroidPlugins
@@ -27,6 +28,8 @@ class UserInfoPresenterTest {
     @Mock
     private lateinit var service: ApiService
 
+    private val userInfoProcessor = UserInfoProcessorImpl()
+
     private lateinit var presenter: UserInfoPresenter
 
     @Before
@@ -36,7 +39,7 @@ class UserInfoPresenterTest {
         // Make sure that trampoline scheduler is used instead of Android's main thread
         RxAndroidPlugins.setInitMainThreadSchedulerHandler { scheduler: Callable<Scheduler?>? -> Schedulers.trampoline() }
 
-        presenter = UserInfoPresenter(service)
+        presenter = UserInfoPresenter(service, userInfoProcessor)
         presenter.bindView(view)
     }
 

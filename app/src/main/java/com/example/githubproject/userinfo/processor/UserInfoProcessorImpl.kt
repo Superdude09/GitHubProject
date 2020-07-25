@@ -13,7 +13,7 @@ class UserInfoProcessorImpl @Inject constructor(): UserInfoProcessor {
         return UserInfo(userInfoDTO.name, userInfoDTO.avatarUrl)
     }
 
-    override fun processUserRepo(userRepoDTO: UserRepoInfoResponse): UserRepoInfo {
+    override fun processUserRepoInfo(userRepoDTO: UserRepoInfoResponse): UserRepoInfo {
         // Other arbitrary processing logic could be placed here when creating the UserRepo object
         //  from the original DTO
         return UserRepoInfo(

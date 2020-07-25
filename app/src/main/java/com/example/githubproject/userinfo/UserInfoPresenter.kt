@@ -71,7 +71,7 @@ class UserInfoPresenter @Inject constructor(private val service: ApiService, pri
 
         for (userRepoDTO in userRepoInfoDTOs) {
             listUserRepos.add(
-                userInfoProcessor.processUserRepo(userRepoDTO)
+                userInfoProcessor.processUserRepoInfo(userRepoDTO)
             )
         }
 
