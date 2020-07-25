@@ -73,10 +73,10 @@ class UserInfoFragment : Fragment(), UserInfoContract.View {
     }
 
     override fun displayUserInfo(userInfo: UserInfo) {
-        tv_user_id.text = userInfo.userId
+        tv_name.text = userInfo.name
         Picasso.get().load(userInfo.avatarUrl).into(user_avatar)
 
-        doFadeInAnimation(tv_user_id)
+        doFadeInAnimation(tv_name)
         doFadeInAnimation(user_avatar)
     }
 
