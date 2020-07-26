@@ -17,8 +17,8 @@ class UserRepoBottomSheetDialogFragment : BottomSheetDialogFragment() {
     companion object {
         private const val PARAM_USER_REPO = "PARAM_USER_REPO"
 
-        private const val DATE_FORMAT_FROM_RESPONSE = "yyyy-MM-dd'T'HH:mm:ss'Z'"
-        private const val DATE_FORMAT_TO_DISPLAY = "MMM dd, yyyy HH:mm:ss a"
+        const val DATE_FORMAT_FROM_RESPONSE = "yyyy-MM-dd'T'HH:mm:ss'Z'"
+        const val DATE_FORMAT_TO_DISPLAY = "MMM dd, yyyy HH:mm:ss a"
 
         fun getInstance(userRepoInfo: UserRepoInfo) : UserRepoBottomSheetDialogFragment {
             val fragment = UserRepoBottomSheetDialogFragment()
