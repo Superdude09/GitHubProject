@@ -15,7 +15,7 @@ class RetrofitModule {
     @Provides
     @Singleton
     fun getRetrofit(): Retrofit = Retrofit.Builder()
-        .baseUrl("https://api.github.com/")     // TODO: externalize/inject?
+        .baseUrl("https://api.github.com/")
         .addConverterFactory(GsonConverterFactory.create())
         .client(getOkHttpClient())
         .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
