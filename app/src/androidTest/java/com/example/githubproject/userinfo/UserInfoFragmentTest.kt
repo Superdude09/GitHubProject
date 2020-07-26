@@ -93,10 +93,10 @@ class UserInfoFragmentTest {
         val positionToClick = 2
         doNothing().`when`(onClickCallback).onUserRepoClicked(listUserRepoInfo[positionToClick])
 
-        scenario.onFragment(fun(fragment: UserInfoFragment) {
+        scenario.onFragment { fragment ->
             fragment.setOnUserRepoClickedListener(onClickCallback)
             fragment.displayUserRepos(listUserRepoInfo)
-        })
+        }
 
         onView(withId(R.id.rv_user_repos)).perform(
             RecyclerViewActions.actionOnItemAtPosition<UserReposListAdapter.UserRepoViewHolder>(
@@ -113,5 +113,24 @@ class UserInfoFragmentTest {
                 listUserRepoInfo[i]
             )
         }
+    }
+
+    @Test
+    fun doSearch() {
+        // NOTE: This test case will not work because UserInfoPresenter is a final class and cannot
+        // be mocked with Mockito; may need to use Mockk instead
+        
+//        val scenario = launchFragmentInContainer<UserInfoFragment>(themeResId = R.style.AppTheme)
+//
+//        val presenter = mock(UserInfoPresenter::class.java)
+//        val userId = "Some user id"
+//        doNothing().`when`(presenter).getUser(userId)
+//
+//        scenario.onFragment { fragment ->
+//            fragment.presenter = presenter
+//            fragment.doSearch(userId)
+//        }
+//
+//        verify(presenter, times(1)).getUser(userId)
     }
 }
