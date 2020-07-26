@@ -15,6 +15,7 @@ import org.mockito.Mockito.*
 
 @RunWith(AndroidJUnit4::class)
 class SearchInputFragmentTest {
+
     @Test
     fun searchInputFragment_views() {
         launchFragmentInContainer<SearchInputFragment>(themeResId = R.style.AppTheme)
