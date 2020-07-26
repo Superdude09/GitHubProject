@@ -8,6 +8,8 @@ interface UserInfoContract {
     interface View : BaseView {
         fun displayUserInfo(userInfo: UserInfo)
         fun displayUserRepos(listUserRepoInfo: List<UserRepoInfo>)
+        fun handleUserInfoError()
+        fun handleUserRepoInfoError()
     }
 
     interface Presenter {

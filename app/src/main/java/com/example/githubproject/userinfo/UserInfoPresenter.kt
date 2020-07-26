@@ -64,6 +64,7 @@ class UserInfoPresenter @Inject constructor(private val service: ApiService, pri
 
     private fun onGetUserInfoError(throwable: Throwable) {
         Timber.e(throwable)
+        view?.handleUserInfoError()
     }
 
     private fun processUserReposResponse(userRepoInfoDTOs: List<UserRepoInfoResponse>): List<UserRepoInfo> {
@@ -80,11 +81,11 @@ class UserInfoPresenter @Inject constructor(private val service: ApiService, pri
 
     private fun onGetUserReposSuccess(listUserRepoInfo: List<UserRepoInfo>) {
         Timber.d("Successfully retrieved user repos: $listUserRepoInfo")
-
         view?.displayUserRepos(listUserRepoInfo)
     }
 
     private fun onGetUserReposError(throwable: Throwable) {
         Timber.e(throwable)
+        view?.handleUserRepoInfoError()
     }
 }
